@@ -1,0 +1,12 @@
+{
+  "name": "mantine",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "cd ./packages/client && vite --open"
+  }
+}
