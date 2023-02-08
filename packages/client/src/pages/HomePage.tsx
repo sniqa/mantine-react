@@ -1,8 +1,4 @@
-import { Button, ColorScheme } from "@mantine/core";
-import { useToggleDarkModel } from "@libs/toggleDarkModel";
-
+import MainLayout from '@comps/layouts/MainLayout'
 export default () => {
-  const { toggleDarkModel } = useToggleDarkModel();
-
-  return <Button onClick={toggleDarkModel}></Button>;
-};
+	return <MainLayout />
+}
