@@ -8,7 +8,23 @@ import {
   Flex,
   Avatar,
   Grid,
+  ActionIcon,
+  Tooltip,
+  Indicator,
+  Menu,
+  Breadcrumbs,
 } from "@mantine/core";
+import {
+  IconEllipsisVertical,
+  IconLight,
+  IconDark,
+  IconBell,
+} from "@comps/FontAwesomeIcons";
+import LanguageSelect from "@comps/LanguageSelect";
+
+import { useColorScheme } from "@libs/hooks";
+
+import { useLanguage } from "@libs/hooks";
 
 interface HeaderProps {
   opened: boolean;
@@ -18,32 +34,63 @@ interface HeaderProps {
 export default ({ opened, close }: HeaderProps) => {
   const theme = useMantineTheme();
 
+  const { isDarkModel, toggleColorScheme } = useColorScheme();
+
+  const language = useLanguage();
+
   return (
-    <Header height={{ base: 40, md: 60 }} className="flex items-center">
-      <div className="flex bg-red-400  w-full">
-        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-          <Burger
-            opened={opened}
-            onClick={close}
-            size="sm"
-            color={theme.colors.gray[6]}
-            mr="xl"
-          />
+    <Header height={{ base: 40, md: 60 }}>
+      <div className="flex justify-between items-center h-full px-2">
+        <MediaQuery
+          largerThan="xs"
+          styles={{ display: "none" }}
+          className="w-full"
+        >
+          <Flex justify="space-between">
+            <Burger
+              opened={opened}
+              onClick={close}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
+
+            <ActionIcon onClick={() => {}}>
+              <IconEllipsisVertical />
+            </ActionIcon>
+          </Flex>
         </MediaQuery>
 
-        <Grid>
-          <Grid.Col span={1}>
-            <div className="bg-gray-300">Image</div>
-            {/* <Image /> */}
-          </Grid.Col>
-          <Grid.Col span={10}>
-            <div className="bg-gray-400">Hamster Project</div>
-          </Grid.Col>
+        <MediaQuery
+          smallerThan={`xs`}
+          styles={{ display: "none" }}
+          className={`w-full`}
+        >
+          <Flex justify="space-between">
+            <Breadcrumbs>{["1", "2"]}</Breadcrumbs>
 
-          <Grid.Col span={1}>
-            <Avatar />
-          </Grid.Col>
-        </Grid>
+            <Flex align={`center`}>
+              {/* message button */}
+              <Indicator disabled>
+                <ActionIcon>
+                  <IconBell />
+                </ActionIcon>
+              </Indicator>
+
+              {/* language button */}
+              <LanguageSelect />
+
+              {/* dark model toggle button */}
+              <Tooltip label={language.toggleDarkOrLightModelTip} withArrow>
+                <ActionIcon onClick={toggleColorScheme}>
+                  {isDarkModel ? <IconDark /> : <IconLight />}
+                </ActionIcon>
+              </Tooltip>
+
+              <Avatar />
+            </Flex>
+          </Flex>
+        </MediaQuery>
       </div>
     </Header>
   );

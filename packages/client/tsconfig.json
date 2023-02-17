@@ -18,7 +18,8 @@
     "paths": {
       "@pages/*": ["./src/pages/*"],
       "@libs/*": ["./src/libs/*"],
-      "@comps/*": ["./src/components/*"]
+      "@comps/*": ["./src/components/*"],
+      "@path": ["./src/router.tsx"]
     }
   },
   "include": ["src"],

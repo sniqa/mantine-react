@@ -5,6 +5,9 @@ import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
   plugins: [
     react(),
     legacy({
@@ -23,6 +26,7 @@ export default defineConfig({
       "@comps": resolve(__dirname, "./src/components"),
       "@libs": resolve(__dirname, "./src/libs"),
       "@pages": resolve(__dirname, "./src/pages"),
+      "@path": resolve(__dirname, "./src/router.tsx"),
     },
   },
 });

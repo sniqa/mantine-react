@@ -1,0 +1,7 @@
+{
+  "name": "@mantine/types",
+  "version": "0.0.1",
+  "main": ".src/main.ts",
+  "license": "MIT",
+  "private": true
+}
