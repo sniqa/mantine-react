@@ -1,75 +1,76 @@
+import { constantlist, LanguageConstants } from '@libs/constant'
 import {
-  ColorSchemeModel,
-  StateContext,
-  StateReducerType,
-  useContext,
-} from "@libs/context";
-import { constantlist, Languagelist } from "@libs/constant";
+	ColorSchemeModel,
+	StateContext,
+	StateReducerType,
+	useContext,
+} from '@libs/context'
+import { Languagelist } from '@libs/language'
 
-export { Languagelist };
+export { Languagelist }
 
 // get cureent language
 export const useLanguage = () => {
-  const { state } = useContext(StateContext);
+	const { state } = useContext(StateContext)
 
-  return constantlist[state.language];
-};
+	return Reflect.get(constantlist, state.language) as LanguageConstants
+}
 
 // set language kind
 export const useToggleLanguage = () => {
-  const { dispatch } = useContext(StateContext);
+	const { dispatch } = useContext(StateContext)
 
-  const toggleLanguage = (language: Languagelist) =>
-    dispatch({
-      type: StateReducerType.languageKind,
-      payload: language,
-    });
+	const toggleLanguage = (language: Languagelist) =>
+		dispatch({
+			type: StateReducerType.languageKind,
+			payload: language,
+		})
 
-  return {
-    toggleLanguage,
-  };
-};
+	return {
+		toggleLanguage,
+	}
+}
 
 // get, set dark / light model
 export const useColorScheme = () => {
-  const { state, dispatch } = useContext(StateContext);
+	const { state, dispatch } = useContext(StateContext)
 
-  const toggleColorScheme = () =>
-    dispatch({
-      type: StateReducerType.toggleColorScheme,
-      payload: "",
-    });
+	const toggleColorScheme = () =>
+		dispatch({
+			type: StateReducerType.toggleColorScheme,
+			payload: '',
+		})
 
-  const isDarkModel = state.colorScheme === ColorSchemeModel.DarkModel;
+	const isDarkModel = state.colorScheme === ColorSchemeModel.DarkModel
 
-  return {
-    colorScheme: state.colorScheme,
-    toggleColorScheme,
-    isDarkModel,
-  };
-};
+	return {
+		colorScheme: state.colorScheme,
+		toggleColorScheme,
+		isDarkModel,
+	}
+}
 
 // get set token
 export const useLogin = () => {
-  const { state, dispatch } = useContext(StateContext);
+	const { state, dispatch } = useContext(StateContext)
 
-  const isLogin = state.token != "";
+	const isLogin = state.token != ''
 
-  const login = (token: string) =>
-    dispatch({
-      type: StateReducerType.setToken,
-      payload: token,
-    });
+	const login = (token: string) =>
+		dispatch({
+			type: StateReducerType.setToken,
+			payload: token,
+		})
 
-  const logout = () =>
-    dispatch({
-      type: StateReducerType.deleteToken,
-      payload: "",
-    });
+	const logout = () =>
+		dispatch({
+			type: StateReducerType.deleteToken,
+			payload: '',
+		})
 
-  return {
-    isLogin,
-    login,
-    logout,
-  };
-};
+	return {
+		isLogin,
+		login,
+		logout,
+	}
+}
