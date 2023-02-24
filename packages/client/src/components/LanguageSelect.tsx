@@ -1,8 +1,9 @@
 import { ActionIcon, Menu, Tooltip } from "@mantine/core";
 import { IconLanguage } from "./FontAwesomeIcons";
 import { useLanguage, Languagelist, useToggleLanguage } from "@libs/hooks";
+import { memo } from "react";
 
-export default () => {
+export default memo(() => {
   const language = useLanguage();
 
   const { toggleLanguage } = useToggleLanguage();
@@ -27,4 +28,4 @@ export default () => {
       </Menu.Dropdown>
     </Menu>
   );
-};
+});

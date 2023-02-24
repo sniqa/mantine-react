@@ -19,32 +19,32 @@ const IpAddressPage = lazy(() => import("@pages/network/IpAddressPage"));
 const LinerPage = lazy(() => import("@pages/network/LinerPage"));
 const TelPage = lazy(() => import("@pages/network/TelPage"));
 
-export enum RouterPath {
-  Root = "/",
-  Login = "/login",
-  Home = "/home",
+export const RouterPath = {
+  Root: "/",
+  Login: "/login",
+  Home: "/home",
 
-  Profile = "/profile",
-  Document = "/profile/document",
+  Profile: "/profile",
+  Document: "/profile/document",
 
-  Network = "/network",
-  Network_type = "/network/type",
-  Network_ip_address = "/network/ipaddress",
-  Network_liner = "/network/liner",
-  Network_tel = "/network/tel",
+  Network: "/network",
+  Network_type: "/network/network_type",
+  Network_ip_address: "/network/ipaddress",
+  Network_liner: "/network/liner",
+  Network_tel: "/network/tel",
 
-  User = "/user",
-  Account = "/user/account",
+  User: "/user",
+  Account: "/user/account",
 
-  Device = "/device",
-  Device_computer = "/device/computer",
-  Device_office = "/device/office_device",
-  Device_network = "/device/network_device",
-  Device_server = "/device/server",
-  Device_usb_key = "/device/usb_key",
+  Device: "/device",
+  Device_computer: "/device/computer",
+  Device_office: "/device/office_device",
+  Device_network: "/device/network_device",
+  Device_server: "/device/server",
+  Device_usb_key: "/device/usb_key",
 
-  Logs = "/logs",
-}
+  Logs: "/logs",
+};
 
 export default createBrowserRouter([
   {

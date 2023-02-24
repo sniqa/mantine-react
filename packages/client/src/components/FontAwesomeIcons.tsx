@@ -1,152 +1,278 @@
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-import { faUsb } from '@fortawesome/free-brands-svg-icons'
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { faUsb } from "@fortawesome/free-brands-svg-icons";
 import {
-	faArrowDownWideShort,
-	faBars,
-	faBarsStaggered,
-	faBell,
-	faBolt,
-	faBook,
-	faCalendar,
-	faChevronDown,
-	faChevronLeft,
-	faChevronRight,
-	faClock,
-	faColumns,
-	faCompress,
-	faComputer,
-	faDesktop,
-	faDiagramProject,
-	faEllipsisH,
-	faEllipsisVertical,
-	faExpand,
-	faEyeSlash,
-	faFileArrowDown,
-	faFileArrowUp,
-	faFilter,
-	faFilterCircleXmark,
-	faGear,
-	faGlobe,
-	faHardDrive,
-	faHouse,
-	faLanguage,
-	faLock,
-	faMessage,
-	faMoon,
-	faNetworkWired,
-	faPen,
-	faPhone,
-	faPlus,
-	faPrint,
-	faSearch,
-	faSearchMinus,
-	faServer,
-	faSortDown,
-	faSun,
-	faThumbTack,
-	faTrash,
-	faUser,
-	faUserGear,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { MRT_Icons } from 'mantine-react-table'
-config.autoAddCss = false
+  faArrowDownWideShort,
+  faBars,
+  faBarsStaggered,
+  faBell,
+  faBolt,
+  faBook,
+  faCalendar,
+  faCheck,
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
+  faCircleCheck,
+  faCircleExclamation,
+  faClock,
+  faColumns,
+  faCompress,
+  faComputer,
+  faComputerMouse,
+  faDesktop,
+  faDiagramProject,
+  faEllipsisH,
+  faEllipsisVertical,
+  faExclamation,
+  faExpand,
+  faEyeSlash,
+  faFile,
+  faFileArrowDown,
+  faFileArrowUp,
+  faFilter,
+  faFilterCircleXmark,
+  faGear,
+  faGlobe,
+  faHardDrive,
+  faHouse,
+  faLanguage,
+  faLock,
+  faMessage,
+  faMoon,
+  faNetworkWired,
+  faPen,
+  faPhone,
+  faPlus,
+  faPrint,
+  faSearch,
+  faSearchMinus,
+  faServer,
+  faSortDown,
+  faSun,
+  faThumbTack,
+  faTrash,
+  faUser,
+  faUserGear,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
+import { MRT_Icons } from "mantine-react-table";
+config.autoAddCss = false;
+
+type IconProps = Omit<FontAwesomeIconProps, "icon">;
 
 export const fontAwesomeIcons: Partial<MRT_Icons> = {
-	IconArrowDown: (props: any) => (
-		<FontAwesomeIcon icon={faSortDown} {...props} />
-	),
-	IconClearAll: () => <FontAwesomeIcon icon={faBarsStaggered} />,
-	IconTallymark1: () => <FontAwesomeIcon icon={faBars} />,
-	IconTallymark2: () => <FontAwesomeIcon icon={faBars} />,
-	IconTallymark3: () => <FontAwesomeIcon icon={faBars} />,
-	IconTallymark4: () => <FontAwesomeIcon icon={faBars} />,
-	IconTallymarks: () => <FontAwesomeIcon icon={faBars} />,
-	IconFilter: (props: any) => <FontAwesomeIcon icon={faFilter} {...props} />,
-	IconFilterOff: () => <FontAwesomeIcon icon={faFilterCircleXmark} />,
-	IconMinimize: () => <FontAwesomeIcon icon={faCompress} />,
-	IconMaximize: () => <FontAwesomeIcon icon={faExpand} />,
-	IconSearch: (props: any) => <FontAwesomeIcon icon={faSearch} {...props} />,
-	IconCircleOff: () => <FontAwesomeIcon icon={faSearchMinus} />,
-	IconColumns: () => <FontAwesomeIcon icon={faColumns} />,
-	IconDotsVertical: () => <FontAwesomeIcon icon={faEllipsisVertical} />,
-	IconDots: () => <FontAwesomeIcon icon={faEllipsisH} />,
-	IconArrowsSort: (props: any) => (
-		<FontAwesomeIcon icon={faArrowDownWideShort} {...props} /> //props so that style rotation transforms are applied
-	),
-	IconPinned: (props: any) => (
-		<FontAwesomeIcon icon={faThumbTack} {...props} /> //props so that style rotation transforms are applied
-	),
-	IconEyeOff: () => <FontAwesomeIcon icon={faEyeSlash} />,
-}
+  IconArrowDown: (props: any) => (
+    <FontAwesomeIcon icon={faSortDown} {...props} {...props} />
+  ),
+  IconClearAll: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBarsStaggered} {...props} />
+  ),
+  IconTallymark1: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBars} {...props} />
+  ),
+  IconTallymark2: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBars} {...props} />
+  ),
+  IconTallymark3: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBars} {...props} />
+  ),
+  IconTallymark4: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBars} {...props} />
+  ),
+  IconTallymarks: (props: IconProps) => (
+    <FontAwesomeIcon icon={faBars} {...props} />
+  ),
+  IconFilter: (props: any) => (
+    <FontAwesomeIcon icon={faFilter} {...props} {...props} />
+  ),
+  IconFilterOff: (props: IconProps) => (
+    <FontAwesomeIcon icon={faFilterCircleXmark} {...props} />
+  ),
+  IconMinimize: (props: IconProps) => (
+    <FontAwesomeIcon icon={faCompress} {...props} />
+  ),
+  IconMaximize: (props: IconProps) => (
+    <FontAwesomeIcon icon={faExpand} {...props} />
+  ),
+  IconSearch: (props: any) => (
+    <FontAwesomeIcon icon={faSearch} {...props} {...props} />
+  ),
+  IconCircleOff: (props: IconProps) => (
+    <FontAwesomeIcon icon={faSearchMinus} {...props} />
+  ),
+  IconColumns: (props: IconProps) => (
+    <FontAwesomeIcon icon={faColumns} {...props} />
+  ),
+  IconDotsVertical: (props: IconProps) => (
+    <FontAwesomeIcon icon={faEllipsisVertical} {...props} />
+  ),
+  IconDots: (props: IconProps) => (
+    <FontAwesomeIcon icon={faEllipsisH} {...props} />
+  ),
+  IconArrowsSort: (props: any) => (
+    <FontAwesomeIcon icon={faArrowDownWideShort} {...props} {...props} /> //props so that style rotation transforms are applied
+  ),
+  IconPinned: (props: any) => (
+    <FontAwesomeIcon icon={faThumbTack} {...props} {...props} /> //props so that style rotation transforms are applied
+  ),
+  IconEyeOff: (props: IconProps) => (
+    <FontAwesomeIcon icon={faEyeSlash} {...props} />
+  ),
+};
 
-export const IconHome = () => <FontAwesomeIcon icon={faHouse} />
+export const IconHome = (props: IconProps) => (
+  <FontAwesomeIcon icon={faHouse} {...props} />
+);
 
-export const IconUserManage = () => <FontAwesomeIcon icon={faUserGear} />
+export const IconUserManage = (props: IconProps) => (
+  <FontAwesomeIcon icon={faUserGear} {...props} />
+);
 
-export const IconDocument = () => <FontAwesomeIcon icon={faBook} />
+export const IconDocument = (props: IconProps) => (
+  <FontAwesomeIcon icon={faBook} {...props} />
+);
 
-export const IconNetwork = () => <FontAwesomeIcon icon={faNetworkWired} />
+export const IconNetwork = (props: IconProps) => (
+  <FontAwesomeIcon icon={faNetworkWired} {...props} />
+);
 
-export const IconSettings = () => <FontAwesomeIcon icon={faGear} />
+export const IconSettings = (props: IconProps) => (
+  <FontAwesomeIcon icon={faGear} {...props} />
+);
 
-export const IconMessage = () => <FontAwesomeIcon icon={faMessage} />
+export const IconMessage = (props: IconProps) => (
+  <FontAwesomeIcon icon={faMessage} {...props} />
+);
 
-export const IconDevice = () => <FontAwesomeIcon icon={faDesktop} />
+export const IconDevice = (props: IconProps) => (
+  <FontAwesomeIcon icon={faDesktop} {...props} />
+);
 
-export const IconLight = () => <FontAwesomeIcon icon={faSun} />
+export const IconLight = (props: IconProps) => (
+  <FontAwesomeIcon icon={faSun} {...props} />
+);
 
-export const IconDark = () => <FontAwesomeIcon icon={faMoon} />
+export const IconDark = (props: IconProps) => (
+  <FontAwesomeIcon icon={faMoon} {...props} />
+);
 
-export const IconEllipsisVertical = () => (
-	<FontAwesomeIcon icon={faEllipsisVertical} />
-)
+export const IconEllipsisVertical = (props: IconProps) => (
+  <FontAwesomeIcon icon={faEllipsisVertical} {...props} />
+);
 
-export const IconBell = () => <FontAwesomeIcon icon={faBell} />
+export const IconBell = (props: IconProps) => (
+  <FontAwesomeIcon icon={faBell} {...props} />
+);
 
-export const IconLanguage = () => <FontAwesomeIcon icon={faLanguage} />
+export const IconLanguage = (props: IconProps) => (
+  <FontAwesomeIcon icon={faLanguage} {...props} />
+);
 
-export const IconChevronLeft = () => <FontAwesomeIcon icon={faChevronLeft} />
+export const IconChevronLeft = (props: IconProps) => (
+  <FontAwesomeIcon icon={faChevronLeft} {...props} />
+);
 
-export const IconChevronRight = () => <FontAwesomeIcon icon={faChevronRight} />
+export const IconChevronRight = (props: IconProps) => (
+  <FontAwesomeIcon icon={faChevronRight} {...props} />
+);
 
-export const IconChevronDown = () => <FontAwesomeIcon icon={faChevronDown} />
+export const IconChevronDown = (props: IconProps) => (
+  <FontAwesomeIcon icon={faChevronDown} {...props} />
+);
 
-export const IconAccount = () => <FontAwesomeIcon icon={faUser} />
+export const IconAccount = (props: IconProps) => (
+  <FontAwesomeIcon icon={faUser} {...props} />
+);
 
-export const IconComputer = () => <FontAwesomeIcon icon={faComputer} />
+export const IconComputer = (props: IconProps) => (
+  <FontAwesomeIcon icon={faComputer} {...props} />
+);
 
-export const IconUser = () => <FontAwesomeIcon icon={faUser} />
+export const IconUser = (props: IconProps) => (
+  <FontAwesomeIcon icon={faUser} {...props} />
+);
 
-export const IconPassword = () => <FontAwesomeIcon icon={faLock} />
+export const IconPassword = (props: IconProps) => (
+  <FontAwesomeIcon icon={faLock} {...props} />
+);
 
-export const IconIpAddrees = () => <FontAwesomeIcon icon={faDiagramProject} />
+export const IconIpAddrees = (props: IconProps) => (
+  <FontAwesomeIcon icon={faDiagramProject} {...props} />
+);
 
-export const IconTel = () => <FontAwesomeIcon icon={faPhone} />
+export const IconTel = (props: IconProps) => (
+  <FontAwesomeIcon icon={faPhone} {...props} />
+);
 
-export const IconLiner = () => <FontAwesomeIcon icon={faBolt} />
+export const IconLiner = (props: IconProps) => (
+  <FontAwesomeIcon icon={faBolt} {...props} />
+);
 
-export const IconOfficeDevice = () => <FontAwesomeIcon icon={faPrint} />
+export const IconOfficeDevice = (props: IconProps) => (
+  <FontAwesomeIcon icon={faPrint} {...props} />
+);
 
-export const IconServer = () => <FontAwesomeIcon icon={faServer} />
+export const IconServer = (props: IconProps) => (
+  <FontAwesomeIcon icon={faServer} {...props} />
+);
 
-export const IconNetworkDevice = () => <FontAwesomeIcon icon={faHardDrive} />
+export const IconNetworkDevice = (props: IconProps) => (
+  <FontAwesomeIcon icon={faHardDrive} {...props} />
+);
 
-export const IconUsbKey = () => <FontAwesomeIcon icon={faUsb} />
+export const IconUsbKey = (props: IconProps) => (
+  <FontAwesomeIcon icon={faUsb} {...props} />
+);
 
-export const IconNetworkType = () => <FontAwesomeIcon icon={faGlobe} />
+export const IconNetworkType = (props: IconProps) => (
+  <FontAwesomeIcon icon={faGlobe} {...props} />
+);
 
-export const IconDelete = () => <FontAwesomeIcon icon={faTrash} />
+export const IconDelete = (props: IconProps) => (
+  <FontAwesomeIcon icon={faTrash} {...props} />
+);
 
-export const IconExportFile = () => <FontAwesomeIcon icon={faFileArrowDown} />
+export const IconExportFile = (props: IconProps) => (
+  <FontAwesomeIcon icon={faFileArrowDown} {...props} />
+);
 
-export const IconImportFile = () => <FontAwesomeIcon icon={faFileArrowUp} />
+export const IconImportFile = (props: IconProps) => (
+  <FontAwesomeIcon icon={faFileArrowUp} {...props} />
+);
 
-export const IconAdd = () => <FontAwesomeIcon icon={faPlus} />
+export const IconAdd = (props: IconProps) => (
+  <FontAwesomeIcon icon={faPlus} {...props} />
+);
 
-export const IconEdit = () => <FontAwesomeIcon icon={faPen} />
+export const IconEdit = (props: IconProps) => (
+  <FontAwesomeIcon icon={faPen} {...props} />
+);
 
-export const IconDate = () => <FontAwesomeIcon icon={faCalendar} />
+export const IconDate = (props: IconProps) => (
+  <FontAwesomeIcon icon={faCalendar} {...props} />
+);
 
-export const IconTime = () => <FontAwesomeIcon icon={faClock} />
+export const IconTime = (props: IconProps) => (
+  <FontAwesomeIcon icon={faClock} {...props} />
+);
+
+export const IconFile = (props: IconProps) => (
+  <FontAwesomeIcon icon={faFile} {...props} />
+);
+
+export const IconError = (props: IconProps) => (
+  <FontAwesomeIcon icon={faExclamation} {...props} />
+);
+
+export const IconSuccess = (props: IconProps) => (
+  <FontAwesomeIcon icon={faCheck} {...props} />
+);
+
+export const IconClick = (props: IconProps) => (
+  <FontAwesomeIcon icon={faComputerMouse} {...props} />
+);

@@ -1,7 +1,10 @@
 {
-  "name": "@mantine/types",
+  "name": "@mantine-assets/types",
   "version": "0.0.1",
-  "main": ".src/main.ts",
+  "main": "./src/main.ts",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
 }

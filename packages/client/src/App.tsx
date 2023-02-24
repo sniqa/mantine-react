@@ -1,6 +1,6 @@
 import { useColorScheme } from "@libs/hooks";
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
+import NotificationsProvider from "@libs/notifications";
 import { NavigationProgress } from "@mantine/nprogress";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
@@ -18,7 +18,7 @@ export default () => {
         withGlobalStyles
         withNormalizeCSS
       >
-        <NotificationsProvider position="top-center">
+        <NotificationsProvider>
           <NavigationProgress />
           <RouterProvider router={router} />
         </NotificationsProvider>

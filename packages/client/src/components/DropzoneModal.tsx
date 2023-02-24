@@ -1,49 +1,116 @@
-import { useLanguage } from '@libs/hooks'
-import { Anchor, Button, Group, Modal, ModalProps, Text } from '@mantine/core'
-import { Dropzone, FileWithPath } from '@mantine/dropzone'
-import { memo } from 'react'
-import { IconHome } from './FontAwesomeIcons'
+import { useLanguage } from "@libs/hooks";
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  ModalProps,
+  Text,
+} from "@mantine/core";
+import { Dropzone, FileWithPath, DropzoneProps } from "@mantine/dropzone";
+import { memo, useState } from "react";
+import { IconHome, IconFile, IconDelete } from "./FontAwesomeIcons";
+import { notifications } from "@libs/notifications";
 
-type DropzoneModalProps = {} & ModalProps
+export type DropzoneModalProps = {
+  modalTitle?: string;
+  downloadLinkTip?: string;
+  opened: boolean;
+  onClose: () => void;
+  onUploadStart?: (Files: FileWithPath[]) => void;
+} & Omit<DropzoneProps, "children" | "onDrop">;
 
-export default memo(({ opened, onClose }: DropzoneModalProps) => {
-	const language = useLanguage()
-	return (
-		<Modal opened={opened} onClose={onClose} centered title="这是上传文件">
-			<div className="mb-4">
-				<Anchor className="pb-4">下载链接</Anchor>
-			</div>
+export default memo(
+  ({
+    opened,
+    onClose,
+    modalTitle,
+    downloadLinkTip,
+    onUploadStart,
+    ...prop
+  }: DropzoneModalProps) => {
+    const language = useLanguage();
 
-			<div className="">
-				<Dropzone
-					onDrop={function (files: FileWithPath[]): void {
-						throw new Error('Function not implemented.')
-					}}
-				>
-					<Dropzone.Accept>
-						<IconHome />
-					</Dropzone.Accept>
+    const [files, setFiles] = useState<FileWithPath[]>([]);
 
-					<Dropzone.Idle>
-						<IconHome />
-					</Dropzone.Idle>
+    return (
+      <Modal
+        opened={opened}
+        onClose={onClose}
+        centered
+        title={modalTitle || language.tableDropzoneModalTitleTip}
+        sx={{ padding: 0 }}
+      >
+        <div className="mb-2">
+          <Anchor className="pb-2">
+            {downloadLinkTip || language.tableDropzoneModalDownloadLinkTip}
+          </Anchor>
+        </div>
 
-					<Text size="xl" inline>
-						Drag images here or click to select files
-					</Text>
-					<Text size="sm" color="dimmed" inline mt={7}>
-						Attach as many files as you like, each file should not exceed 5mb
-					</Text>
-				</Dropzone>
-			</div>
+        {/* Dropzone */}
+        <Dropzone {...prop} onDrop={(files) => setFiles(files)}>
+          <Center className="py-1 text-2xl text-gray-400">
+            <IconFile />
+          </Center>
 
-			{/* button */}
-			<Group position="right" className="mt-4">
-				<Button size="xs" variant="outline" onClick={onClose}>
-					{language.cancelButtonTip}
-				</Button>
-				<Button size="xs">{language.acceptButtonTip}</Button>
-			</Group>
-		</Modal>
-	)
-})
+          <Flex direction={"column"} justify="center" align="center">
+            <Text size="xl" className=" text-gray-400">
+              {language.tableDropzoneModalHint1Tip}
+            </Text>
+
+            <Text size="sm" className="pt-1 text-gray-300">
+              {language.tableDropzoneModalHint1Tip}
+            </Text>
+          </Flex>
+        </Dropzone>
+
+        {files.map((file) => (
+          <TextWithDelete
+            key={file.size}
+            message={file.name}
+            onDelete={() =>
+              setFiles((oldFiles) =>
+                oldFiles.filter((f) => f.path != file.path)
+              )
+            }
+          />
+        ))}
+
+        {/* buttons */}
+        <Group position="right" className="mt-4">
+          <Button size="xs" variant="outline" onClick={onClose}>
+            {language.cancelButtonTip}
+          </Button>
+          <Button
+            size="xs"
+            disabled={files.length === 0}
+            onClick={() => onUploadStart && onUploadStart(files)}
+          >
+            {language.acceptButtonTip}
+          </Button>
+        </Group>
+      </Modal>
+    );
+  }
+);
+
+const TextWithDelete = ({
+  message,
+  onDelete,
+}: {
+  message: string;
+  onDelete: () => void;
+}) => {
+  return (
+    <Group position="apart">
+      <Text>{message}</Text>
+
+      <ActionIcon onClick={onDelete}>
+        <IconDelete />
+      </ActionIcon>
+    </Group>
+  );
+};
