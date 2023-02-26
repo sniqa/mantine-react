@@ -1,5 +1,9 @@
-import { Image } from "@mantine/core";
+import { Center, Image } from '@mantine/core'
 
 export default () => {
-  return <Image src={"/hamster.gif"} />;
-};
+	return (
+		<Center>
+			<Image src={'/hamster.gif'} />
+		</Center>
+	)
+}

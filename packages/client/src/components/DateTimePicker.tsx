@@ -1,172 +1,162 @@
-import { IconClick, IconDate, IconTime } from "@comps/FontAwesomeIcons";
-import { useLanguage } from "@libs/hooks";
-import { notifications } from "@libs/notifications";
-import { ActionIcon, Box, Button, Group } from "@mantine/core";
-import { DatePicker, TimeInput, DatePickerProps } from "@mantine/dates";
-import "dayjs/locale/en";
-import "dayjs/locale/zh-cn";
-import { memo, ReactNode, useCallback, useEffect, useState } from "react";
-
-type DateTime = {
-  date: Date;
-  time: Date;
-};
+import { IconDate, IconTime } from '@comps/FontAwesomeIcons'
+import { useLanguage } from '@libs/hooks'
+import { notifications } from '@libs/notifications'
+import { Box, Button, Group } from '@mantine/core'
+import { DatePicker, DatePickerProps, TimeInput } from '@mantine/dates'
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh-cn'
+import { memo, ReactNode, useCallback, useEffect, useState } from 'react'
 
 type DateTimePickerProps = {
-  defaultDate?: Date;
-  defaultTime?: Date;
-  onChange?: ({ date, time }: DateTime) => void;
-  excludeDate?: (date: Date, selectedDate: Date) => boolean;
-  withIcon?: boolean;
-  timeError?: ReactNode;
-  className?: string;
-} & DatePickerProps;
+	defaultDate?: Date
+	defaultTime?: Date
+	onChange?: (timestamp: number) => void
+	excludeDate?: (date: Date, selectedDate: Date) => boolean
+	withIcon?: boolean
+	timeError?: ReactNode
+	className?: string
+} & Omit<DatePickerProps, 'onChange'>
 
-const underlineToHorizontalLine = (str: string) => str.split("_").join("-");
+const underlineToHorizontalLine = (str: string) => str.split('_').join('-')
 
 // Date Time Picker
 export const DateTimePicker = memo(
-  ({
-    onChange,
-    defaultDate,
-    defaultTime,
-    withIcon = true,
-    timeError,
-    size,
-    className,
-    ...prop
-  }: DateTimePickerProps) => {
-    const language = useLanguage();
+	({
+		onChange,
+		defaultDate,
+		defaultTime,
+		withIcon = true,
+		timeError,
+		size,
+		className,
+		...prop
+	}: DateTimePickerProps) => {
+		const language = useLanguage()
 
-    const currentDate = new Date();
+		const [dateTime, setDateTime] = useState({
+			date: defaultDate,
+			time: defaultTime || new Date(0),
+		})
 
-    const [date, setDate] = useState(defaultDate || currentDate);
+		useEffect(() => {
+			onChange &&
+				onChange(
+					getTimestampFromDateAndTime({
+						date: dateTime.date || new Date(0),
+						time: dateTime.time,
+					})
+				)
+		}, [dateTime])
 
-    const [time, setTime] = useState(
-      defaultTime || new Date(currentDate.toLocaleDateString())
-    );
-
-    useEffect(() => {
-      onChange &&
-        onChange({
-          date,
-          time,
-        });
-    }, [date, time]);
-
-    return (
-      <Box className={`"flex rounded overflow-hidden ${className}`}>
-        <DatePicker
-          {...prop}
-          size={size}
-          placeholder={language.pickDateTip}
-          icon={withIcon && <IconDate />}
-          locale={underlineToHorizontalLine(language.languageKind)}
-          inputFormat="YYYY/MM/DD"
-          onChange={(value) => value && setDate(value)}
-          rightSection={
-            <TimeInput
-              size={size}
-              icon={withIcon && <IconTime />}
-              value={time}
-              withSeconds
-              variant="unstyled"
-              className="mr-20"
-              error={timeError}
-              onChange={setTime}
-            />
-          }
-        />
-      </Box>
-    );
-  }
-);
+		return (
+			<Box className={`flex rounded overflow-hidden ${className}`}>
+				<DatePicker
+					{...prop}
+					size={size}
+					placeholder={language.pickDateTip}
+					defaultValue={dateTime.date}
+					icon={withIcon && <IconDate />}
+					locale={underlineToHorizontalLine(language.languageKind)}
+					inputFormat="YYYY/MM/DD"
+					onChange={(value) =>
+						value && setDateTime((old) => ({ ...old, date: value }))
+					}
+					rightSection={
+						<TimeInput
+							size={size}
+							icon={withIcon && <IconTime />}
+							value={dateTime.time}
+							withSeconds
+							variant="unstyled"
+							className="mr-20"
+							error={timeError}
+							onChange={(value) =>
+								value && setDateTime((old) => ({ ...old, time: value }))
+							}
+						/>
+					}
+				/>
+			</Box>
+		)
+	}
+)
 
 // Date Time Range Picker
-interface DateTimeRangePickerProps {
-  className?: string;
-  onChange?: (value: { startTimestamp: number; endTimestamp: number }) => void;
-}
+type DateTimeRangePickerProps = {
+	className?: string
+	onChange?: (value: { startTimestamp: number; endTimestamp: number }) => void
+} & DatePickerProps
 
 export const DateTimeRangePicker = ({
-  className,
-  onChange,
+	className,
+	onChange,
+	size,
 }: DateTimeRangePickerProps) => {
-  const language = useLanguage();
+	const language = useLanguage()
 
-  const currentDate = new Date();
+	const [dateTimeRange, setDateTimeRange] = useState({
+		startTimestamp: 0,
+		endTimestamp: 0,
+	})
 
-  const t = new Date(currentDate.toLocaleDateString());
+	const handleonClick = useCallback(() => {
+		if (dateTimeRange.endTimestamp < dateTimeRange.startTimestamp) {
+			return notifications.error(
+				language.errmsg.dateTimeRangePicker.endTimeLessStartTime
+			)
+		}
 
-  const [startTime, setStartTime] = useState<DateTime>({
-    date: currentDate,
-    time: t,
-  });
-  const [endTime, setEndTime] = useState<DateTime>({
-    date: currentDate,
-    time: t,
-  });
+		console.log(dateTimeRange)
 
-  const [timeError, setTimeError] = useState(false);
+		console.log({
+			start: new Date(dateTimeRange.startTimestamp).toLocaleString(),
+			end: new Date(dateTimeRange.endTimestamp).toLocaleString(),
+		})
 
-  // test the endTime is large startTime
-  const test = useCallback((dateTime: DateTime) => {
-    setTimeError(false);
+		onChange && onChange(dateTimeRange)
+	}, [dateTimeRange])
 
-    if (dateTime.time.getTime() < startTime.time.getTime()) {
-      setTimeError(true);
-    }
+	return (
+		<Group spacing="xs" className={className}>
+			<DateTimePicker
+				size={size}
+				onChange={(datetime) =>
+					setDateTimeRange((old) => ({
+						...old,
+						startTimestamp: datetime,
+					}))
+				}
+			/>
 
-    setEndTime(dateTime);
-  }, []);
+			<div className="bg-gray-400 w-4 h-0.5 rounded-md"></div>
 
-  const handleonClick = useCallback(() => {
-    const startTimestamp = getTimestampFromDateAndTime(startTime);
+			<DateTimePicker
+				onChange={(datetime) =>
+					setDateTimeRange((old) => ({
+						...old,
+						endTimestamp: datetime,
+					}))
+				}
+				size={size}
+				excludeDate={(date) => date.getTime() < dateTimeRange.startTimestamp}
+			/>
 
-    const endTimestamp = getTimestampFromDateAndTime(endTime);
-
-    if (endTimestamp < startTimestamp) {
-      return notifications.error(
-        language.errmsg.dateTimeRangePicker.endTimeLessStartTime
-      );
-    }
-
-    onChange &&
-      onChange({
-        startTimestamp,
-        endTimestamp,
-      });
-  }, [startTime, endTime]);
-
-  return (
-    <Group spacing="xs" className={className}>
-      <DateTimePicker onChange={setStartTime} defaultDate={currentDate} />
-
-      <div className="bg-gray-400 w-4 h-0.5 rounded-md"></div>
-
-      <DateTimePicker
-        onChange={test}
-        defaultDate={currentDate}
-        timeError={timeError}
-        excludeDate={(date) => date.getDate() < startTime?.date.getDate()}
-      />
-
-      <Button size="xs" onClick={handleonClick}>
-        {"确定"}
-      </Button>
-    </Group>
-  );
-};
+			<Button size={size} onClick={handleonClick}>
+				{'确定'}
+			</Button>
+		</Group>
+	)
+}
 
 const getTimestampFromDateAndTime = ({
-  date,
-  time,
+	date,
+	time,
 }: {
-  date: Date;
-  time: Date;
+	date: Date
+	time: Date
 }) => {
-  return (
-    new Date(date.toLocaleDateString()).getTime() +
-    (time.getTime() - new Date(time.toLocaleDateString()).getTime())
-  );
-};
+	return (
+		new Date(date?.toLocaleDateString() || 0).getTime() +
+		(time.getTime() - new Date(time.toLocaleDateString()).getTime())
+	)
+}

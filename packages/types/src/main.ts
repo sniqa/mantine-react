@@ -1,2 +1,2 @@
-export type { Permission } from "./permission";
-export type { UsbKeyInfo, UsbKeyInfoWithId } from "./device";
+export * from './device'
+export type { Permission } from './permission'
