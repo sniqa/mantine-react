@@ -1,13 +1,13 @@
 {
-	"name": "mantine",
-	"version": "0.0.1",
-	"license": "MIT",
-	"private": true,
-	"workspaces": [
-		"packages/*"
-	],
-	"scripts": {
-		"dev": "cd ./packages/client && vite --open",
-		"server-dev": "cd ./packages/server &&yarn run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\""
-	}
+  "name": "mantine",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "cd ./packages/client && vite --open",
+    "server-dev": "cd ./packages/server && yarn dev:start"
+  }
 }

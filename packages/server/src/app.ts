@@ -1,9 +1,28 @@
-import Fastify from 'fastify'
+import Fastify from "fastify";
+import { jsonDispatch } from "./dispatch";
 
-const server = Fastify({})
+const fastify = Fastify({ logger: true });
 
-server.post('/phl', {}, async (request, response) => {})
+fastify.get("/test", async (req, res) => res.send("hello world"));
 
-server.get('/phl', {}, async (request, response) => 'response')
+const dispatch = jsonDispatch({
+  test: async () => "hello world 1",
+});
 
-server.listen({ port: 8080 })
+fastify.post("/phl", async (request, response) => {
+  const body = request.body as Record<string, any>;
+
+  console.log(body);
+
+  const res = await dispatch(body);
+
+  console.log(res);
+
+  response.send(res);
+});
+
+const start = async () => {
+  await fastify.listen({ port: 8080 });
+};
+
+start();
